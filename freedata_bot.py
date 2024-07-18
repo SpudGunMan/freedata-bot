@@ -8,6 +8,7 @@ URL = f'http://{ADDRESS}:{PORT}'
 userURL = f'{URL}/user'
 radioURL = f'{URL}/radio'
 messageURL = f'{URL}/freedata/messages'
+RESPONSE = "Hello, I am away from the radio right now, but my FreeData BOT says Hello Back!"
 
 import requests
 import time
@@ -124,7 +125,7 @@ while True:
                 print(f"Sending bot message to {msg[3]}")
 
                 if get_radio() == True:
-                    transmit_text_message("I am a bot", msg[3])
+                    transmit_text_message(RESPONSE, msg[3])
                     # write the message unique ID to a file to prevent multiple replies
                     save_last_messageId(msg[0])
                 else:
