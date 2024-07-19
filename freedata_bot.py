@@ -9,6 +9,7 @@ userURL = f'{URL}/user'
 radioURL = f'{URL}/radio'
 messageURL = f'{URL}/freedata/messages'
 RESPONSE = "Hello, I am away from the radio right now, but my FreeData BOT says Hello Back!"
+TRAP = "hello"
 
 import requests
 import time
@@ -119,8 +120,8 @@ while True:
             time.sleep(15)
             continue
         else:
-            # if the message body includes "hello" then send a message
-            if "hello" in msg[4].lower():
+            # if the message body includes trap var then send a message
+            if TRAP in msg[4].lower():
                 print(f"Received message: {msg[4]}")
                 print(f"Sending bot message to {msg[3]}")
 
