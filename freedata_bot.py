@@ -17,7 +17,7 @@ import pickle
 
 try:
     # make a request to the API
-    response = requests.get(URL)
+    response = requests.get(URL, timeout=5)
     data = response.json()
 
     # extract data from response
@@ -34,12 +34,12 @@ if name != 'FreeDATA API':
 
 def get_radio():
     # get the radio status
-    response = requests.get(radioURL)
+    response = requests.get(radioURL, timeout=5)
     data = response.json()
     radio = data['radio_status']
     frequency = data['radio_frequency']
 
-    if radio == True:
+    if radio:
         #print ("Radio are connected Successfully detected on frequency: " + str(frequency))
         return True
     else:
@@ -47,7 +47,7 @@ def get_radio():
         return False
 
 def get_most_recent_message():
-    response = requests.get(messageURL)
+    response = requests.get(messageURL, timeout=5)
     data = response.json()
     # for each message, get the message data
     message_count = data['total_messages']
@@ -91,7 +91,7 @@ def get_most_recent_message():
 
 def transmit_text_message(messageBody, destination):
     # send a message
-    response = requests.post(messageURL, json={'body': messageBody, 'destination': destination})
+    response = requests.post(messageURL, json={'body': messageBody, 'destination': destination}, timeout=5)
     data = response.json()
     return data
 
@@ -125,7 +125,7 @@ while True:
                 print(f"Received message: {msg[4]}")
                 print(f"Sending bot message to {msg[3]}")
 
-                if get_radio() == True:
+                if get_radio():
                     transmit_text_message(RESPONSE, msg[3])
                     # write the message unique ID to a file to prevent multiple replies
                     save_last_messageId(msg[0])
